@@ -1,0 +1,2 @@
+mongoimport --db guitarAPI --collection pianochords --drop --file piano.json
+mongoimport --db guitarAPI --collection guitarchords --drop --file guitar.json

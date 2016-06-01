@@ -4,14 +4,16 @@ var mongoose = require('mongoose');
 
 var app = express();
 
+mongoose.connect('mongodb://localhost/chordAPI');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
-app.get('/piano', function(res,req){
-	res.send('piano');
+app.get('/piano', function(req,res){
+	res.json('piano');
 });
 
-app.get('/guitar', function(res,req){
+app.get('/guitar', function(req,res){
 	res.send('guitar');
 });
 
