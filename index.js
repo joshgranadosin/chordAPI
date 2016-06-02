@@ -23,7 +23,7 @@ var badrequest = {'status':400, 'err':'default',
 
 app.get('/piano/:note', function(req,res){
 	console.log('get#piano#default');
-	var note = req.params.note;
+	var note = req.params.note.toUpperCase();
 	var mod = 'major';
 
 	Pianochord.findOne({type:mod}, function(err, data){
@@ -41,7 +41,7 @@ app.get('/piano/:note', function(req,res){
 
 app.get('/guitar/:note', function(req,res){
 	console.log('get#guitar#default');
-	var note = req.params.note;
+	var note = req.params.note.toUpperCase();
 	var mod = 'major'
 
 	Guitarchord.findOne({type:mod}, function(err, data){
@@ -59,7 +59,7 @@ app.get('/guitar/:note', function(req,res){
 
 app.get('/piano/:note/:mod', function(req,res){
 	console.log('get#piano');
-	var note = req.params.note;
+	var note = req.params.note.toUpperCase();
 	var mod = req.params.mod;
 
 	Pianochord.findOne({type:mod}, function(err, data){
@@ -77,7 +77,7 @@ app.get('/piano/:note/:mod', function(req,res){
 
 app.get('/guitar/:note/:mod', function(req,res){
 	console.log('get#guitar');
-	var note = req.params.note;
+	var note = req.params.note.toUpperCase();
 	var mod = req.params.mod;
 
 	if(req.params.mod === 'minor'){mod = 'minor'};
