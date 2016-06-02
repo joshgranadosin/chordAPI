@@ -5,9 +5,6 @@ var mongoose = require('mongoose');
 var app = express();
 
 var mongodbURI = process.env.MONGODB_URI || 'mongodb://localhost/chordsAPI';
-console.log('********************');
-console.log(mongodbURI);
-console.log('********************');
 
 mongoose.connect(mongodbURI);
 
