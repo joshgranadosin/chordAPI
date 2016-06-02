@@ -4,7 +4,9 @@ var mongoose = require('mongoose');
 
 var app = express();
 
-mongoose.connect('mongodb://localhost/chordsAPI');
+var mongodbURI = process.env.MONGODB_URI || 'mongodb://localhost/chordsAPI';
+
+mongoose.connect(mongodbURI);
 
 var Guitarchord = require('./models/guitarchord.js');
 var Pianochord = require('./models/pianochord.js');
