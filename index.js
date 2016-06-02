@@ -14,18 +14,36 @@ var Pianochord = require('./models/pianochord.js');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
-app.get('/', function(req,res){
-	res.json({'info':'please refer to the documentation on how to utilize this api.'});
-});
-
 app.get('/piano/:note', function(req,res){
-	var redirectURL = '/piano/' + req.params.note + '/major';
-	res.redirect(redirectURL);
+	console.log('get#piano#default');
+	var note = req.params.note;
+	var mod = 'major';
+
+	Pianochord.findOne({type:mod}, function(err, data){
+		if(!err){
+			console.log(data);
+			res.json(data.data[note]);
+		}
+		else{
+			console.log(err);
+		}
+	});
 });
 
 app.get('/guitar/:note', function(req,res){
-	var redirectURL = '/guitar/' + req.params.note + '/major';
-	res.redirect(redirectURL);
+	console.log('get#guitar#default');
+	var note = req.params.note;
+	var mod = 'major'
+
+	Guitarchord.findOne({type:mod}, function(err, data){
+		if(!err){
+			console.log(data);
+			res.json(data.data[note]);
+		}
+		else{
+			console.log(err);
+		}
+	});
 });
 
 app.get('/piano/:note/:mod', function(req,res){
@@ -61,6 +79,14 @@ app.get('/guitar/:note/:mod', function(req,res){
 			console.log(err);
 		}
 	});
+});
+
+app.get('/*', function(req,res){
+	res.status(400).json({'status':400,'message':"requests must be made in the following format: " +
+		"https://chords-api-app.herokuapp.com/:type/:note/:modifier where " +
+		":type is either 'piano' or 'guitar', " +
+		":note is the note letter (A-G) with a flat(Ab) or a sharp(B%23), " +
+		":modifier is either 'major' or 'minor'"});
 });
 
 app.listen(process.env.PORT || 3000);
