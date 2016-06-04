@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-
+var path = require('path');
 var app = express();
 
 var mongodbURI = process.env.MONGODB_URI || 'mongodb://localhost/chordsAPI';
@@ -14,12 +14,18 @@ var Pianochord = require('./models/pianochord.js');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 var badrequest = {'status':400, 'err':'default',
 		'message':"requests must be made in the following format: " +
 		"https://chords-api-app.herokuapp.com/:type/:note/:modifier where " +
 		":type is either 'piano' or 'guitar', " +
 		":note is the note letter (A-G) with a flat(Ab) or a sharp(B%23), " +
 		":modifier is either 'major' or 'minor'"}
+
+app.get('/', function(req,res){
+	res.sendFile('./public/index.html');
+});
 
 app.get('/piano/:note', function(req,res){
 	console.log('get#piano#default');
